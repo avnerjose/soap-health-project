@@ -1,7 +1,24 @@
+import { PhoneBookItem } from "@/components/PhoneBookItem";
 import { Button } from "@/components/ui/button";
+import { PhoneBookEntry } from "@/entities/PhoneBookEntry";
+import { api } from "@/services/api";
 import { Search } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export function HomePage() {
+  const [phoneBookEntries, setPhoneBookEntries] = useState<PhoneBookEntry[]>(
+    []
+  );
+  const fetchPhoneBook = async () => {
+    const { data } = await api.get<PhoneBookEntry[]>("/phone-book");
+
+    setPhoneBookEntries(data);
+  };
+
+  useEffect(() => {
+    fetchPhoneBook();
+  }, []);
+
   return (
     <div className="bg-gray-400 min-h-screen p-4">
       <main className="max-w-6xl mx-auto">
@@ -20,7 +37,11 @@ export function HomePage() {
             />
           </div>
         </div>
-        <div className="mt-8"></div>
+        <div className="mt-8">
+          {phoneBookEntries.map((entry) => (
+            <PhoneBookItem phoneBookItem={entry} />
+          ))}
+        </div>
       </main>
     </div>
   );
