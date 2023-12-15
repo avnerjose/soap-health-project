@@ -54,10 +54,14 @@ export function DeleteContactDialog({
         </AlertDialogDescription>
       </AlertDialogHeader>
       <AlertDialogFooter>
-        <AlertDialogCancel className="border border-blue-500 text-blue-500 bg-blue-50">
+        <AlertDialogCancel
+          data-testid="cancel"
+          className="border border-blue-500 text-blue-500 bg-blue-50"
+        >
           Cancel
         </AlertDialogCancel>
         <AlertDialogAction
+          data-testid="delete"
           onClick={handleDelete}
           className="border border-red-500 text-red-500 bg-red-50"
         >
