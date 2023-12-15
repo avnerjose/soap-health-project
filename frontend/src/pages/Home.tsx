@@ -12,6 +12,11 @@ export function HomePage() {
   const [phoneBookEntries, setPhoneBookEntries] = useState<PhoneBookEntry[]>(
     []
   );
+  const [searchLastName, setSearchSearchLastName] = useState("");
+
+  const filteredPhoneBookEntries = phoneBookEntries.filter((phoneBookEntry) =>
+    phoneBookEntry.lastName.toLowerCase().includes(searchLastName.toLowerCase())
+  );
   const fetchPhoneBook = async () => {
     const { data } = await api.get<PhoneBookEntry[]>("/phone-book");
 
@@ -46,11 +51,13 @@ export function HomePage() {
             <input
               className="w-full py-2 outline-none"
               placeholder="Search for contact by last name..."
+              value={searchLastName}
+              onChange={(e) => setSearchSearchLastName(e.target.value)}
             />
           </div>
         </div>
         <div className="mt-8">
-          {phoneBookEntries.map((entry) => (
+          {filteredPhoneBookEntries.map((entry) => (
             <PhoneBookItem
               key={entry.id}
               phoneBookItem={entry}
