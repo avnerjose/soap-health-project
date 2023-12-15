@@ -34,7 +34,7 @@ export function HomePage() {
                   + Add Contact
                 </Button>
               </DialogTrigger>
-              <CreateContactDialog />
+              <CreateContactDialog onSubmit={fetchPhoneBook} />
             </Dialog>
           </div>
           <div className="flex gap-1 items-center w-full mt-6 border-2 rounded-md focus-within:outline focus-within:outline-1 border-gray-500 px-2 bg-white">

@@ -11,6 +11,7 @@ import validator from "validator";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { InputWithErrorMessage } from "./InputWithErrorMessage";
+import { api } from "@/services/api";
 
 const CreateContactSchema = z.object({
   firstName: z.string().min(1, { message: "First name is required" }),
@@ -25,7 +26,13 @@ const CreateContactSchema = z.object({
 
 type CreateContactType = z.infer<typeof CreateContactSchema>;
 
-export function CreateContactDialog() {
+interface CreateContactDialogProps {
+    onSubmit: () => Promise<void>;
+}
+
+export function CreateContactDialog({
+    onSubmit: submitCallback
+}: CreateContactDialogProps) {
   const {
     register,
     handleSubmit,
@@ -34,12 +41,24 @@ export function CreateContactDialog() {
     resolver: zodResolver(CreateContactSchema),
   });
 
-  const onSubmit = (data: CreateContactType) => {
-    console.log(data);
+  const onSubmit = async (data: CreateContactType) => {
+    try {
+      const { firstName, lastName, phone } = data;
+
+      await api.post("/phone-book", {
+        firstName,
+        lastName,
+        phone,
+      });
+
+      await submitCallback();
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
-    <DialogContent className="sm:max-w-md">
+    <DialogContent className="sm:max-w-md bg-white">
       <form onSubmit={handleSubmit(onSubmit)}>
         <DialogHeader>
           <DialogTitle>Add new contact</DialogTitle>
