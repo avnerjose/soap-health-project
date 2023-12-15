@@ -79,7 +79,7 @@ export function CreateContactDialog({
         title: "Contact created",
         description: `The contact ${firstName} ${lastName} has been created successfully`,
       });
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (e: any) {
       console.log(e);
 
