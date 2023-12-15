@@ -14,6 +14,7 @@ import { InputWithErrorMessage } from "./InputWithErrorMessage";
 import { api } from "@/services/api";
 import { PhoneBookEntry } from "@/entities/PhoneBookEntry";
 import { useEffect } from "react";
+import { useToast } from "./ui/use-toast";
 
 const EditContactSchema = z.object({
   firstName: z.string().min(1, { message: "First name is required" }),
@@ -45,6 +46,8 @@ export function EditContactDialog({
   onSubmit: submitCallback,
   contactToEdit,
 }: EditContactDialogProps) {
+  const { toast } = useToast();
+
   const {
     register,
     handleSubmit,
@@ -67,14 +70,26 @@ export function EditContactDialog({
       const { id } = contactToEdit;
       const { firstName, lastName, phone } = data;
 
+      toast({
+        title: "Editing contact...",
+      });
+
       await api.put(`/phone-book/${id}`, {
         firstName,
         lastName,
         phone,
       });
-
       await submitCallback();
+
+      toast({
+        title: "Contact edited successfully",
+      });
     } catch (e) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Something went wrong",
+      });
       console.log(e);
     }
   };

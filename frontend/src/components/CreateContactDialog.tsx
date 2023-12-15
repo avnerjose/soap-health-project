@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { InputWithErrorMessage } from "./InputWithErrorMessage";
 import { api } from "@/services/api";
+import { useToast } from "./ui/use-toast";
 
 const CreateContactSchema = z.object({
   firstName: z.string().min(1, { message: "First name is required" }),
@@ -41,6 +42,8 @@ interface CreateContactDialogProps {
 export function CreateContactDialog({
   onSubmit: submitCallback,
 }: CreateContactDialogProps) {
+  const { toast } = useToast();
+
   const {
     register,
     handleSubmit,
@@ -53,6 +56,10 @@ export function CreateContactDialog({
   const onSubmit = async (data: CreateContactType) => {
     try {
       const { firstName, lastName, phone } = data;
+
+      toast({
+        title: "Creating contact...",
+      });
 
       await api.post("/phone-book", {
         firstName,
@@ -67,8 +74,20 @@ export function CreateContactDialog({
       });
 
       await submitCallback();
-    } catch (e) {
+
+      toast({
+        title: "Contact created",
+        description: `The contact ${firstName} ${lastName} has been created successfully`,
+      });
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (e: any) {
       console.log(e);
+
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: `Something went wrong while creating the contact: ${e.message}`,
+      });
     }
   };
 
@@ -90,7 +109,7 @@ export function CreateContactDialog({
           />
           <InputWithErrorMessage
             name="lastName"
-            label="LastName name"
+            label="Last Name"
             register={register}
             error={errors.lastName?.message}
           />

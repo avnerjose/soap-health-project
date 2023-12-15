@@ -8,6 +8,7 @@ import {
   AlertDialogHeader,
   AlertDialogFooter,
 } from "./ui/alert-dialog";
+import { useToast } from "./ui/use-toast";
 
 interface DeleteContactDialogProps {
   id: string;
@@ -18,11 +19,25 @@ export function DeleteContactDialog({
   id,
   onSubmit,
 }: DeleteContactDialogProps) {
+  const { toast } = useToast();
+
   const handleDelete = async () => {
     try {
+      toast({
+        title: "Deleting contact...",
+      });
       await api.delete(`/phone-book/${id}`);
       await onSubmit();
+
+      toast({
+        title: "Contact deleted successfully",
+      });
     } catch (e) {
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Something went wrong",
+      });
       console.log(e);
     }
   };
