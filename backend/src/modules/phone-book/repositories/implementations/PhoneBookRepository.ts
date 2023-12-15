@@ -1,12 +1,12 @@
-import { PhoneBook } from "../../model/PhoneBook";
+import { PhoneBookEntry } from "../../model/PhoneBookEntry";
 import {
-  ICreatePhoneBookDTO,
-  IPhoneBooksRepository,
-  IUpdatePhoneBookDTO,
+  ICreatePhoneBookEntryDTO,
+  IPhoneBookRepository,
+  IUpdatePhoneBookEntryDTO,
 } from "../IPhoneBookRepository";
 
-class PhoneBookRepository implements IPhoneBooksRepository {
-  private phoneBooks: PhoneBook[] = [];
+class PhoneBookRepository implements IPhoneBookRepository {
+  private phoneBooks: PhoneBookEntry[] = [];
   private static INSTANCE: PhoneBookRepository;
 
   private constructor() {
@@ -21,8 +21,12 @@ class PhoneBookRepository implements IPhoneBooksRepository {
     return PhoneBookRepository.INSTANCE;
   }
 
-  create({ firstName, lastName, phone }: ICreatePhoneBookDTO): PhoneBook {
-    const phoneBook = new PhoneBook({ firstName, lastName, phone });
+  create({
+    firstName,
+    lastName,
+    phone,
+  }: ICreatePhoneBookEntryDTO): PhoneBookEntry {
+    const phoneBook = new PhoneBookEntry({ firstName, lastName, phone });
 
     this.phoneBooks.push(phoneBook);
 
@@ -37,22 +41,20 @@ class PhoneBookRepository implements IPhoneBooksRepository {
     this.phoneBooks = filteredPhoneBooks;
   }
 
-  findById(id: string): PhoneBook | undefined {
+  findById(id: string): PhoneBookEntry | undefined {
     return this.phoneBooks.find((phoneBook) => phoneBook.id === id);
   }
 
-  findByLastName(lastName: string): PhoneBook | undefined {
+  findByLastName(lastName: string): PhoneBookEntry | undefined {
     return this.phoneBooks.find((phoneBook) => phoneBook.lastName === lastName);
   }
 
-  list(): PhoneBook[] {
+  list(): PhoneBookEntry[] {
     return this.phoneBooks;
   }
 
-  update(id: string, phoneBook: IUpdatePhoneBookDTO): PhoneBook {
-    const phoneBookIndex = this.phoneBooks.findIndex(
-      (pb) => pb.id === id
-    );
+  update(id: string, phoneBook: IUpdatePhoneBookEntryDTO): PhoneBookEntry {
+    const phoneBookIndex = this.phoneBooks.findIndex((pb) => pb.id === id);
 
     this.phoneBooks[phoneBookIndex] = phoneBook;
 

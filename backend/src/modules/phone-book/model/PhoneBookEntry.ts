@@ -1,13 +1,13 @@
 import { v4 as uuid } from "uuid";
-import { ICreatePhoneBookDTO } from "../repositories/IPhoneBookRepository";
+import { ICreatePhoneBookEntryDTO } from "../repositories/IPhoneBookRepository";
 
-class PhoneBook {
+class PhoneBookEntry {
   id?: string;
   firstName: string;
   lastName: string;
   phone: string;
 
-  constructor({ firstName, lastName, phone }: ICreatePhoneBookDTO) {
+  constructor({ firstName, lastName, phone }: ICreatePhoneBookEntryDTO) {
     if (!this.id) {
       this.id = uuid();
     }
@@ -18,4 +18,4 @@ class PhoneBook {
   }
 }
 
-export { PhoneBook };
+export { PhoneBookEntry };
