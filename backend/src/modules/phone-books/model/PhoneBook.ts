@@ -2,15 +2,17 @@ import { v4 as uuid } from "uuid";
 
 class PhoneBook {
   id?: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   phone: string;
 
-  constructor(name: string, phone: string) {
+  constructor(firstName: string, lastName: string, phone: string) {
     if (!this.id) {
       this.id = uuid();
     }
 
-    this.name = name;
+    this.firstName = firstName;
+    this.lastName = lastName;
     this.phone = phone;
   }
 }
