@@ -12,6 +12,7 @@ interface IPhoneBookRepository {
   create({ firstName, lastName, phone }: ICreatePhoneBookEntryDTO): PhoneBookEntry;
   findById(id: string): PhoneBookEntry | undefined;
   findByLastName(lastName: string): PhoneBookEntry | undefined;
+  findByPhone(phone: string): PhoneBookEntry | undefined;
   list(): PhoneBookEntry[];
   update(id: string, phoneBookEntry: IUpdatePhoneBookEntryDTO): PhoneBookEntry;
   delete(id: string): void;

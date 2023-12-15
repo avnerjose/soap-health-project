@@ -49,6 +49,10 @@ class PhoneBookRepository implements IPhoneBookRepository {
     return this.phoneBooks.find((phoneBook) => phoneBook.lastName === lastName);
   }
 
+  findByPhone(phone: string): PhoneBookEntry | undefined {
+    return this.phoneBooks.find((phoneBook) => phoneBook.phone === phone);
+  }
+
   list(): PhoneBookEntry[] {
     return this.phoneBooks;
   }
@@ -61,3 +65,5 @@ class PhoneBookRepository implements IPhoneBookRepository {
     return this.phoneBooks[phoneBookIndex];
   }
 }
+
+export { PhoneBookRepository };
