@@ -5,13 +5,12 @@ import {
   DialogFooter,
   DialogHeader,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { Button } from "./ui/button";
 import { z } from "zod";
 import validator from "validator";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { InputWithErrorMessage } from "./InputWithErrorMessage";
 
 const CreateContactSchema = z.object({
   firstName: z.string().min(1, { message: "First name is required" }),
@@ -49,29 +48,24 @@ export function CreateContactDialog() {
           </DialogDescription>
         </DialogHeader>
         <div className="flex flex-col gap-2 my-4">
-          <div className="flex flex-col gap-2">
-            <div className="flex gap-2 items-center justify-between">
-              <Label htmlFor="firstName">First name</Label>
-              <p className="text-red-500 text-sm">
-                {errors.firstName?.message}
-              </p>
-            </div>
-            <Input {...register("firstName")} />
-          </div>
-          <div className="flex flex-col gap-2">
-            <div className="flex gap-2 items-center justify-between">
-              <Label htmlFor="lastName">Last name</Label>
-              <p className="text-red-500 text-sm">{errors.lastName?.message}</p>
-            </div>
-            <Input {...register("lastName")} />
-          </div>
-          <div className="flex flex-col gap-2">
-            <div className="flex gap-2 items-center justify-between">
-              <Label htmlFor="phone">Phone number</Label>
-              <p className="text-red-500 text-sm">{errors.phone?.message}</p>
-            </div>
-            <Input {...register("phone")} />
-          </div>
+          <InputWithErrorMessage
+            name="firstName"
+            label="First name"
+            register={register}
+            error={errors.firstName?.message}
+          />
+          <InputWithErrorMessage
+            name="lastName"
+            label="LastName name"
+            register={register}
+            error={errors.lastName?.message}
+          />
+          <InputWithErrorMessage
+            name="phone"
+            label="Phone number"
+            register={register}
+            error={errors.phone?.message}
+          />
         </div>
         <DialogFooter className="sm:justify-start">
           <Button
