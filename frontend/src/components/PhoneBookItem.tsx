@@ -3,6 +3,8 @@ import { PhoneBookEntry } from "@/entities/PhoneBookEntry";
 import { Button } from "./ui/button";
 import { Dialog, DialogTrigger } from "./ui/dialog";
 import { EditContactDialog } from "./EditContactDialog";
+import { AlertDialog, AlertDialogTrigger } from "./ui/alert-dialog";
+import { DeleteContactDialog } from "./DeleteContactDialog";
 
 interface PhoneBookItemProps {
   phoneBookItem: PhoneBookEntry;
@@ -35,9 +37,14 @@ export function PhoneBookItem({
             onSubmit={onSubmit}
           />
         </Dialog>
-        <Button className="bg-red-500 p-3 w-12 h-12">
-          <Trash2 className="text-white" />
-        </Button>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button className="bg-red-500 p-3 w-12 h-12">
+              <Trash2 className="text-white" />
+            </Button>
+          </AlertDialogTrigger>
+          <DeleteContactDialog id={id} onSubmit={onSubmit} />
+        </AlertDialog>
       </div>
     </div>
   );
