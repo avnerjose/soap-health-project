@@ -19,9 +19,9 @@ export function InputWithErrorMessage<T extends FieldValues>({
     <div className="flex flex-col gap-2">
       <div className="flex gap-2 items-center justify-between">
         <Label htmlFor={name}>{label}</Label>
-        {error && <p className="text-red-500 text-sm">{error}</p>}
+        {error && <p role="alert" className="text-red-500 text-sm">{error}</p>}
       </div>
-      <Input {...register(name)} />
+      <Input data-testid={name} {...register(name)} />
     </div>
   );
 }
