@@ -5,7 +5,7 @@ import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 
 import { PhoneBookEntry } from "@/entities/PhoneBookEntry";
 import { api } from "@/services/api";
-import { Search } from "lucide-react";
+import { BookUser, Search } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export function HomePage() {
@@ -24,10 +24,14 @@ export function HomePage() {
 
   return (
     <div className="bg-gray-400 min-h-screen p-4">
+      <header className="flex items-center gap-3 w-full justify-center mb-10 mt-4">
+        <BookUser size={32} />
+        <h1 className="text-4xl font-bold text-dark-700">Phone Book App</h1>
+      </header>
       <main className="max-w-6xl mx-auto">
         <div>
           <div className="flex justify-between items-center">
-            <h1 className="text-dark-700 text-4xl font-semibold">Contacts</h1>
+            <h2 className="text-dark-700 text-4xl font-semibold">Contacts</h2>
             <Dialog>
               <DialogTrigger asChild>
                 <Button className="bg-blue-500 text-white text-lg p-6">

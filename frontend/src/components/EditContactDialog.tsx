@@ -21,6 +21,14 @@ const EditContactSchema = z.object({
   phone: z
     .string()
     .min(1, { message: "Phone is required" })
+    .regex(
+      new RegExp(
+        /(\d{3}[-.\s]??\d{3}[-.\s]??\d{4}|\(\d{3}\)\s*\d{3}[-.\s]??\d{4}|\d{3}[-.\s]??\d{4})/
+      ),
+      {
+        message: "Phone is not valid",
+      }
+    )
     .refine(validator.isMobilePhone, {
       message: "Phone is not valid",
     }),

@@ -19,6 +19,14 @@ const CreateContactSchema = z.object({
   phone: z
     .string()
     .min(1, { message: "Phone is required" })
+    .regex(
+      new RegExp(
+        /(\d{3}[-.\s]??\d{3}[-.\s]??\d{4}|\(\d{3}\)\s*\d{3}[-.\s]??\d{4}|\d{3}[-.\s]??\d{4})/
+      ),
+      {
+        message: "Phone is not valid",
+      }
+    )
     .refine(validator.isMobilePhone, {
       message: "Phone is not valid",
     }),
@@ -27,15 +35,16 @@ const CreateContactSchema = z.object({
 type CreateContactType = z.infer<typeof CreateContactSchema>;
 
 interface CreateContactDialogProps {
-    onSubmit: () => Promise<void>;
+  onSubmit: () => Promise<void>;
 }
 
 export function CreateContactDialog({
-    onSubmit: submitCallback
+  onSubmit: submitCallback,
 }: CreateContactDialogProps) {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<CreateContactType>({
     resolver: zodResolver(CreateContactSchema),
@@ -49,6 +58,12 @@ export function CreateContactDialog({
         firstName,
         lastName,
         phone,
+      });
+
+      reset({
+        firstName: "",
+        lastName: "",
+        phone: "",
       });
 
       await submitCallback();
