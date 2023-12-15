@@ -10,7 +10,7 @@ class ListAllPhoneEntriesController {
     try {
       const phoneBookEntries = this.listAllPhoneEntriesUseCase.execute();
 
-      return res.status(201).json(phoneBookEntries);
+      return res.status(200).json(phoneBookEntries);
     } catch (error: any) {
       return res.status(400).json({ message: error.message });
     }

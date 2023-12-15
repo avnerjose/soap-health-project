@@ -59,8 +59,9 @@ class PhoneBookRepository implements IPhoneBookRepository {
 
   update(id: string, phoneBook: IUpdatePhoneBookEntryDTO): PhoneBookEntry {
     const phoneBookIndex = this.phoneBooks.findIndex((pb) => pb.id === id);
+    const databasePhoneBook = this.phoneBooks[phoneBookIndex];
 
-    this.phoneBooks[phoneBookIndex] = phoneBook;
+    this.phoneBooks[phoneBookIndex] = { ...databasePhoneBook, ...phoneBook };
 
     return this.phoneBooks[phoneBookIndex];
   }

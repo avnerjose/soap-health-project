@@ -18,7 +18,7 @@ class UpdatePhoneBookEntryController {
         phone,
       });
 
-      return res.status(201).json(phoneBookEntry);
+      return res.status(200).json(phoneBookEntry);
     } catch (error: any) {
       return res.status(400).json({ message: error.message });
     }
