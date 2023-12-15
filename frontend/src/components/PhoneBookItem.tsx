@@ -6,9 +6,9 @@ interface PhoneBookItemProps {
   phoneBookItem: PhoneBookEntry;
 }
 export function PhoneBookItem({
-  phoneBookItem: { fistName, lastName, phone },
+  phoneBookItem: { firstName, lastName, phone },
 }: PhoneBookItemProps) {
-  const fullName = `${fistName} ${lastName}`;
+  const fullName = `${firstName} ${lastName}`;
 
   return (
     <div className="bg-white flex justify-between items-center py-6 px-4 first:rounded-t-md border-2 border-gray-500">
