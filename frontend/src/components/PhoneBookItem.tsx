@@ -1,12 +1,16 @@
 import { Pencil, Phone, Trash2 } from "lucide-react";
 import { PhoneBookEntry } from "@/entities/PhoneBookEntry";
 import { Button } from "./ui/button";
+import { Dialog, DialogTrigger } from "./ui/dialog";
+import { EditContactDialog } from "./EditContactDialog";
 
 interface PhoneBookItemProps {
   phoneBookItem: PhoneBookEntry;
+  onSubmit: () => Promise<void>;
 }
 export function PhoneBookItem({
-  phoneBookItem: { firstName, lastName, phone },
+  phoneBookItem: { firstName, lastName, phone, id },
+  onSubmit,
 }: PhoneBookItemProps) {
   const fullName = `${firstName} ${lastName}`;
 
@@ -20,9 +24,17 @@ export function PhoneBookItem({
         </span>
       </div>
       <div className="flex gap-1">
-        <Button className="bg-green-500 p-3 w-12 h-12">
-          <Pencil className="text-white" />
-        </Button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button className="bg-green-500 p-3 w-12 h-12">
+              <Pencil className="text-white" />
+            </Button>
+          </DialogTrigger>
+          <EditContactDialog
+            contactToEdit={{ firstName, lastName, phone, id }}
+            onSubmit={onSubmit}
+          />
+        </Dialog>
         <Button className="bg-red-500 p-3 w-12 h-12">
           <Trash2 className="text-white" />
         </Button>

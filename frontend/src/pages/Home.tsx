@@ -47,7 +47,11 @@ export function HomePage() {
         </div>
         <div className="mt-8">
           {phoneBookEntries.map((entry) => (
-            <PhoneBookItem phoneBookItem={entry} />
+            <PhoneBookItem
+              key={entry.id}
+              phoneBookItem={entry}
+              onSubmit={fetchPhoneBook}
+            />
           ))}
         </div>
       </main>
